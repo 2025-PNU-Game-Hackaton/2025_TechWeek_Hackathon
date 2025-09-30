@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -34,6 +34,10 @@ public class PlayerController : MonoBehaviour
     private bool isStumbling = false; // Flag to prevent multiple stumbles at once
     public float fallThresholdY = -5f; // Y position to trigger game over
     private bool isDead = false;
+
+    [Header("Status")]
+    public bool isInvincible = false;
+    public bool isMagnet = false;
 
 
     void Start()
@@ -236,6 +240,17 @@ public class PlayerController : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (isDead) return; // Don't process collisions if already dead
+
+        if (isInvincible)
+        {
+            // 무적인 경우 그냥 지나감
+            BoxCollider collider;
+            if(hit.gameObject.TryGetComponent(out collider)) 
+            {
+                collider.isTrigger = true;
+                return;
+            }
+        }
 
         // Check the tag of the object we collided with
         string tag = hit.gameObject.tag;
