@@ -22,6 +22,9 @@ public class Magnet : MonoBehaviour, IItem
             Destroy(player.transform.Find("CoinChecker")); // 플레이어 가진 코인 체커를 제거
         }
         StartCoroutine(TimerCoroutine(player));
+
+        // 아이템을 화면에서 제거
+        Destroy(gameObject);
     }
 
     private IEnumerator TimerCoroutine(GameObject player)

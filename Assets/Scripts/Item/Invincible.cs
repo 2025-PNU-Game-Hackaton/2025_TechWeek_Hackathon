@@ -21,6 +21,9 @@ public class Invincible : MonoBehaviour, IItem
             StopAllCoroutines();
         }
         StartCoroutine(TimerCoroutine());
+
+        // 아이템을 화면에서 제거
+        Destroy(gameObject);
     }
 
     private IEnumerator TimerCoroutine()
