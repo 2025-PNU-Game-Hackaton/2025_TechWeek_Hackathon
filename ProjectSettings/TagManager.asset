@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Ground
   - Barrier
+  - Chaser
+  - Obstacle_Soft
+  - Obstacle_Hard
+  - Coin
   layers:
   - Default
   - TransparentFX
