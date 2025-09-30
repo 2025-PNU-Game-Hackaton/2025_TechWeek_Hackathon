@@ -16,7 +16,7 @@ public class MainMenuManager : MonoBehaviour
     // 게임 나가기 버튼을 눌렀을 때 호출될 함수
     public void QuitGame()
     {
-        Debug.Log("Quitting game...");
+        Debug.Log("게임 나가기");
         Application.Quit();
     }
 }

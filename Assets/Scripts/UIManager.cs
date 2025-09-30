@@ -45,11 +45,9 @@ public class UIManager : MonoBehaviour
     // 점수 UI 업데이트
     public void UpdateScoreUI(int score)
     {
-        Debug.Log("[UIManager] UpdateScoreUI 함수가 점수 값 " + score + "(으)로 호출되었습니다.");
         if (scoreText != null)
         {
             scoreText.text = "Score: " + score;
-            Debug.Log("[UIManager] scoreText 참조가 유효하여, 화면의 점수를 업데이트했습니다.");
         }
         else
         {
@@ -101,25 +99,21 @@ public class UIManager : MonoBehaviour
 
     public void OnResumeButtonClicked()
     {
-        Debug.Log("OnResumeButtonClicked: 함수 호출 성공!");
         GameManager.instance.ResumeGame();
     }
 
     public void OnRestartButtonClicked()
     {
-        Debug.Log("OnRestartButtonClicked: 함수 호출 성공!");
         GameManager.instance.RestartGame();
     }
 
     public void OnQuitButtonClicked()
     {
-        Debug.Log("OnQuitButtonClicked: 함수 호출 성공!");
         GameManager.instance.QuitGame();
     }
 
     public void OnGoToMenuButtonClicked()
     {
-        Debug.Log("OnGoToMenuButtonClicked: 함수 호출 성공!");
         GameManager.instance.GoToMainMenu();
     }
 }

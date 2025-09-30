@@ -52,11 +52,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         currentGameSpeed = initialSpeed; // 속도 초기화
 
-        Debug.Log("[GameManager] Score 변수가 0으로 리셋되었습니다.");
 
         if (UIManager.instance != null) 
         {
-            Debug.Log("[GameManager] UIManager 인스턴스를 발견하여 점수 UI 업데이트를 요청합니다.");
             UIManager.instance.UpdateScoreUI((int)score);
         }
         else
