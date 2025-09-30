@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Game Over")]
     private int stumbleCount = 0;
+    private bool isStumbling = false; // Flag to prevent multiple stumbles at once
     public float fallThresholdY = -5f; // Y position to trigger game over
     private bool isDead = false;
 
@@ -168,7 +169,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void Stumble()
     {
-        if (isDead) return;
+        // Prevent stumbling again if already in a stumble/recovery state.
+        if (isDead || isStumbling) return;
+
+        // Start a short cooldown to prevent the same obstacle from triggering multiple hits.
+        StartCoroutine(StumbleCooldown());
 
         stumbleCount++;
         animator.SetTrigger("Stumble");
@@ -179,9 +184,27 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // Implement a brief slowdown if desired
-            // StartCoroutine(TemporarySlowdown(0.5f, 1f));
+            // Apply a permanent slowdown.
+            ApplyPermanentSlowdown(0.75f); // Reduce speed to 75%
         }
+    }
+
+    /// <summary>
+    /// Applies a permanent speed reduction to the player.
+    /// </summary>
+    private void ApplyPermanentSlowdown(float speedMultiplier)
+    {
+        forwardSpeed *= speedMultiplier;
+    }
+
+    /// <summary>
+    /// Coroutine to provide a brief period of immunity after stumbling.
+    /// </summary>
+    private IEnumerator StumbleCooldown()
+    {
+        isStumbling = true;
+        yield return new WaitForSeconds(0.5f); // Cooldown duration
+        isStumbling = false;
     }
 
     /// <summary>
@@ -212,8 +235,22 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        // Check if the object we collided with is the Chaser.
-        if (hit.gameObject.CompareTag("Chaser"))
+        if (isDead) return; // Don't process collisions if already dead
+
+        // Check the tag of the object we collided with
+        string tag = hit.gameObject.tag;
+
+        if (tag == "Obstacle_Hard")
+        {
+            GameOver("Hit a hard obstacle");
+        }
+        else if (tag == "Obstacle_Soft")
+        {
+            Stumble();
+            // Destroy the obstacle immediately to prevent hitting it multiple times
+            Destroy(hit.gameObject);
+        }
+        else if (tag == "Chaser")
         {
             GameOver("Caught by the chaser");
         }
