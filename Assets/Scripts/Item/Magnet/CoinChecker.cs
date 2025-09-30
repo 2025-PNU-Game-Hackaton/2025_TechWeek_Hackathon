@@ -30,8 +30,12 @@ public class CoinChecker : MonoBehaviour
     {
         foreach (GameObject coin in coins)
         {
-            Vector3 direction = (transform.position - coin.transform.position).normalized;
-            coin.GetComponent<Rigidbody>().AddForce(direction * forceValue);
+            try
+            {
+                Vector3 direction = (transform.position - coin.transform.position).normalized;
+                coin.GetComponent<Rigidbody>().AddForce(direction * forceValue);
+            }
+            catch { }
         }
     }
 }
